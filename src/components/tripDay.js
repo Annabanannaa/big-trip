@@ -4,6 +4,12 @@ import {Months} from "../const";
 import TripEventComponent from './tripEvent';
 
 const creatTripDay = (day, dayNum) => {
+
+  const getItemsMarkup = day.events.map((event) => {
+    const tripEventComponent = new TripEventComponent(event).getElement();
+    return tripEventComponent.outerHTML;
+  }).join('');
+
   const getFormattedDate = () =>
     `${Months[day.date.getMonth()]} ${day.date.getDate() < 10 ? `0${day.date.getDate()}` : day.date.getDate()}`;
   return (
@@ -15,9 +21,7 @@ const creatTripDay = (day, dayNum) => {
             </div>
             
             <ul class="trip-events__list">
-               ${day.events.map((event) => 
-      new TripEventComponent(event).getElement().innerHTML
-    ).join(``)}
+             ${getItemsMarkup}
              </ul>
            </li>
      </ul>`
